@@ -20,7 +20,7 @@ $chocolateyPackages = @(
   "debugdiagnostic",
   
   # .NET
-  "nuget",
+  "nuget.commandline",
   "dotnet3.5",
   "netfx-4.8-devpack",
   "dotnetcore-sdk",
@@ -41,7 +41,7 @@ $chocolateyPackages = @(
   "sublimetext3",
   "notepadplusplus",
   "linqpad5",
-  "linqpad",
+  "linqpad6",
 
   # File comparison
   "p4v",
