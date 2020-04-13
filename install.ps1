@@ -64,6 +64,7 @@ $packageSets = @{
     "discord"  
   );
   misc = @(
+    "1password",
     "7zip",
     "autohotkey",
     "awscli",
