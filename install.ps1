@@ -88,9 +88,7 @@ $chocolateyPackages = @(
 # Missing
 # * Microsoft Whiteboard
 
-foreach ($package in $chocolateyPackages) {
-  choco install --confirm $package
-}
+choco install --confirm @chocolateyPackages
 
 Write-Host "Press any key to continue..."
 $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
