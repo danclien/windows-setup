@@ -74,7 +74,6 @@ $packageSets = @{
     "fiddler",
     "foxitreader",
     "googledrive",
-    "malwarebytes",
     "obs-studio",
     "postman",
     "procmon",
