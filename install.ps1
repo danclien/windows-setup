@@ -64,7 +64,6 @@ $packageSets = @{
     "discord"  
   );
   misc = @(
-    "1password",
     "7zip",
     "autohotkey",
     "awscli",
@@ -77,6 +76,7 @@ $packageSets = @{
     "malwarebytes",
     "obs-studio",
     "postman",
+    "procmon",
     "sharex",
     "sysinternals",
     "windirstat"
@@ -86,12 +86,14 @@ $packageSets = @{
 # Create an array with all the packages listed in the hash
 $packages = @($packageSets.Values | % {$_})
 
-# Maybe? 
-# * procmon
-# * processhacker
-
-# Missing
-# * Microsoft Whiteboard
-
 # Install packages
 choco install --confirm @packages
+
+# Need to manually install
+$missingFromChocolatey = @(
+  "1password",
+  "Microsoft Whiteboard"
+)
+
+Write-Host "Needs to be manually installed:"
+$missingFromChocolatey
