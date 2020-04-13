@@ -40,6 +40,7 @@ $packageSets = @{
     "visualstudio2019professional",
     "resharper",
     "vscode",
+    "vim",
     "atom",
     "sublimetext3",
     "notepadplusplus",
