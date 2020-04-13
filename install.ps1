@@ -1,85 +1,89 @@
-# Escalate script to administrator access if needed
+# Check for administrator role
 If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
 {
-  $arguments = "& '" + $myinvocation.mycommand.definition + "'"
-  Start-Process powershell -Verb runAs -ArgumentList $arguments
+  Write-Host "Run this script as an administrator"
   Break
 }
 
 # Install Chocolatey (Unsafe)
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-$chocolateyPackages = @(
-  # CLI
-  "microsoft-windows-terminal",
-  "poshgit",
-  "jq",
+$packageSets = @{
+  cli = @(
+    "microsoft-windows-terminal",
+    "poshgit",
+    "jq"  
+  );
+  debugging = @(
+    "windbg",
+    "debugdiagnostic"
+  );
+  dotnet = @(
+    "nuget.commandline",
+    "dotnet3.5",
+    "netfx-4.8-devpack",
+    "dotnetcore-sdk"  
+  );
+  nodejs = @(
+    "nvm"
+  );
+  haskell = @(
+    "ghc",
+    "haskell-stack"  
+  );
+  docker = @(
+    "docker-cli"
+  )
+  textEditors = @(
+    "visualstudio2019professional",
+    "resharper",
+    "vscode",
+    "atom",
+    "sublimetext3",
+    "notepadplusplus",
+    "linqpad5",
+    "linqpad6"  
+  );
+  fileComparison = @(
+    "p4v",
+    "beyondcompare"
+  );
+  browsers = @(
+    "googlechrome",
+    "firefox",
+    "microsoft-edge"  
+  );
+  entertainment = @(
+    "vlc",
+    "spotify"  
+  );
+  chat = @(
+    "slack",
+    "discord"  
+  );
+  misc = @(
+    "7zip",
+    "autohotkey",
+    "awscli",
+    "baretail",
+    "cyberduck",
+    "divvy",
+    "fiddler",
+    "foxitreader",
+    "googledrive",
+    "malwarebytes",
+    "obs-studio",
+    "postman",
+    "sharex",
+    "sysinternals",
+    "windirstat"
+  );
+}
 
-  # Debugging
-  "windbg",
-  "debugdiagnostic",
-  
-  # .NET
-  "nuget.commandline",
-  "dotnet3.5",
-  "netfx-4.8-devpack",
-  "dotnetcore-sdk",
-  
-  # Node.js
-  "nvm",
-
-  # Haskell
-  "ghc",
-  "haskell-stack",
-  "cabal",
-
-  # Text editors
-  "visualstudio2019professional",
-  "resharper",
-  "vscode",
-  "atom",
-  "sublimetext3",
-  "notepadplusplus",
-  "linqpad5",
-  "linqpad6",
-
-  # File comparison
-  "p4v",
-  "beyondcompare",
-
-  # Browsers
-  "googlechrome",
-  "firefox",
-  "microsoft-edge",
-
-  # Media
-  "vlc",
-  "spotify",
-  "foxitreader",
-
-  # Communication
-  "slack",
-  "discord",
-  "obs-studio",
-
-  # Utility
-  "7zip",
-  "autohotkey",
-  "awscli",
-  "baretail",
-  "cyberduck",
-  "divvy",
-  "fiddler",
-  "googledrive",
-  "malwarebytes",
-  "postman",
-  "sharex",
-  "sysinternals",
-  "windirstat",
-
-  # Docker
-  "docker-cli"
-);
+# Create an array with all the packages listed in the hash
+$packages = @($packageSets.Values | % {$_})
 
 # Maybe? 
 # * procmon
@@ -88,7 +92,5 @@ $chocolateyPackages = @(
 # Missing
 # * Microsoft Whiteboard
 
-choco install --confirm @chocolateyPackages
-
-Write-Host "Press any key to continue..."
-$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+# Install packages
+choco install --confirm @packages
