@@ -14,6 +14,7 @@ $packageSets = @{
   cli = @(
     "microsoft-windows-terminal",
     "poshgit",
+    "powershell-core",
     "jq"  
   );
   debugging = @(
