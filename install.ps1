@@ -78,6 +78,7 @@ $packageSets = @{
     "obs-studio",
     "postman",
     "procmon",
+    "rdmfree",
     "sharex",
     "sysinternals",
     "windirstat"
