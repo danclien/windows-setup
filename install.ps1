@@ -69,6 +69,7 @@ $packageSets = @{
     "7zip",
     "autohotkey",
     "awscli",
+    "awstools.powershell",
     "baretail",
     "cyberduck",
     "divvy",
